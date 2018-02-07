@@ -2,7 +2,9 @@
   "name": "rails-stimulus-todomvc",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "^3.2.1"
+    "@rails/webpacker": "^3.2.1",
+    "todomvc-app-css": "^2.1.0",
+    "todomvc-common": "^1.0.4"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.11.1"
