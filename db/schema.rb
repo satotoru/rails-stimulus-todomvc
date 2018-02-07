@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20180207123704) do
 
   create_table "todos", force: :cascade do |t|
     t.string "name"
+    t.boolean "checked", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
