@@ -1,0 +1,10 @@
+{
+  "name": "rails-stimulus-todomvc",
+  "private": true,
+  "dependencies": {
+    "@rails/webpacker": "^3.2.1"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^2.11.1"
+  }
+}
