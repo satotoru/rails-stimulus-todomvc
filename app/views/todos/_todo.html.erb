@@ -1,9 +1,8 @@
-<li>
+<li data-controller="todoItem" data-id="<%= todo.id %>" data-name="<%= todo.name %>">
   <div class="view">
-    <input class="toggle" type="checkbox">
-    <label><%= todo.name %></label>
-    <button class="destroy"></button>
+    <input class="toggle" type="checkbox" data-action="todoItem#toggle" <%= todo.checked ? "checked" : "" %>>
+    <label data-action="dblclick->todoItem#edit"><%= todo.name %></label>
+    <button class="destroy" data-action="todoItem#destroy"></button>
   </div>
-  <input class="edit" value="<%= todo.name %>">
+  <input class="edit" data-target="todoItem.input" data-action="blur->todoItem#cancel keydown->todoItem#update">
 </li>
-
