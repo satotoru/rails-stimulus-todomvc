@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :todos do
+  resources :todos, only: [:index, :create, :update, :destroy] do
     collection do
       delete :clear_completed
       put :toggle_all
