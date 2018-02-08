@@ -16,4 +16,18 @@ export default class extends Controller {
       data: fd
     });
   }
+
+  clearCompleted(e) {
+    Rails.ajax({
+      url: "/todos/clear_completed",
+      type: "DELETE",
+    });
+  }
+
+  toggleAll(e) {
+    Rails.ajax({
+      url: "/todos/toggle_all",
+      type: "PUT",
+    });
+  }
 }

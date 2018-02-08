@@ -5,7 +5,7 @@
   </header>
   <!-- This section should be hidden by default and shown when there are todos -->
   <section class="main">
-    <input id="toggle-all" class="toggle-all" type="checkbox">
+    <input id="toggle-all" class="toggle-all" type="checkbox" data-action="todoList#toggleAll">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
       <% @todos.each do |todo| %>
@@ -14,24 +14,26 @@
     </ul>
   </section>
   <!-- This footer should hidden by default and shown when there are todos -->
-  <% if @todos.count > 0 %>
+  <% if @all_todos.count > 0 %>
     <footer class="footer">
       <!-- This should be `0 items left` by default -->
-      <span class="todo-count"><strong>0</strong> item left</span>
+      <span class="todo-count"><strong><%= @all_todos.reject(&:checked).count %></strong> item left</span>
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
-          <a class="selected" href="#/">All</a>
+          <%= link_to "All", todos_path, class: (@status == Todo::FilterStatus::ALL) ? "selected" : "" %>
         </li>
         <li>
-          <a href="#/active">Active</a>
+          <%= link_to "Active", todos_path(checked: false), class: (@status == Todo::FilterStatus::ACTIVE) ? "selected" : "" %>
         </li>
         <li>
-          <a href="#/completed">Completed</a>
+          <%= link_to "Completed", todos_path(checked: true), class: (@status == Todo::FilterStatus::COMPLETED) ? "selected" : "" %>
         </li>
       </ul>
       <!-- Hidden if no completed items are left ↓ -->
-      <button class="clear-completed">Clear completed</button>
+      <% if @all_todos.select(&:checked).count > 0 %>
+        <button class="clear-completed" data-action="todoList#clearCompleted">Clear completed</button>
+      <% end %>
     </footer>
   <% end %>
 </section>

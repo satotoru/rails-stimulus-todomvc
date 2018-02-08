@@ -5,6 +5,12 @@ class TodosController < ApplicationController
   # GET /todos.json
   def index
     @todos = Todo.all
+    @all_todos = @todos
+    @status = Todo::FilterStatus::ALL
+    if !params[:checked].nil?
+      @todos = @todos.where(checked: params[:checked] == "true")
+      @status = (params[:checked] == "true") ? Todo::FilterStatus::COMPLETED : Todo::FilterStatus::ACTIVE
+    end
   end
 
   # GET /todos/1
@@ -57,6 +63,24 @@ class TodosController < ApplicationController
     @todo.destroy
     respond_to do |format|
       format.html { redirect_to todos_url, notice: 'Todo was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def clear_completed
+    Todo.where(checked: true).destroy_all
+    respond_to do |format|
+      format.html { redirect_to todos_url, notice: 'Todos were successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def toggle_all
+    ApplicationRecord.transaction do
+      Todo.all.each { |todo| todo.update!(checked: !todo.checked) }
+    end
+    respond_to do |format|
+      format.html { redirect_to todos_url, notice: 'Todos were successfully updated.' }
       format.json { head :no_content }
     end
   end
